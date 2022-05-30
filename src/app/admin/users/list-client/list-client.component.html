@@ -1,0 +1,62 @@
+
+
+
+
+
+
+
+
+<div class="container text-align-center" id="depart">
+    <h3 class="d-flex justify-content-center justify-content-sm-start mt-5 mb-3">
+      {{clients.length}} Clients
+    </h3>
+    <div class="row justify-content-center" >
+        
+      <div class="col-12 col-sm-4 col-lg" *ngFor="let client of clients ;let i = index">
+        <a  class="a text-secondary nav-link">
+          <div class="card border-0">
+            <div *ngIf="client.picture==null &&client.sexe=='MASCULIN'">
+                <img
+                style="width: 200px; height: 200px;"
+                src="../../../../assets/defaultPictureProfile/defaultPictureProfileMasculin.jpg"
+                class="card-img-top border border-warning rounded-circle"
+                alt="..."
+              />
+              </div>
+              <div *ngIf="client.picture==null &&client.sexe=='FEMININ'">
+                <img
+                style="width: 200px; height: 200px;"
+                src="../../../../assets/defaultPictureProfile/defaultPictureProfilFeminin.png"
+                class="card-img-top border border-warning rounded-circle"
+                alt="..."
+              />
+            </div>
+            <div *ngIf="client.picture!=null">
+                <img
+                style="width: 200px; height: 200px;"
+                src="{{'data:image/jpg;base64,'+client.picture}}"
+                class="card-img-top border border-warning rounded-circle"
+                alt="..."
+              />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title text-center">{{client.firstName}} {{client.lastName}}</h5>
+              <h6 style="color:brown" class="card-title text-center">{{client.profession}}</h6>
+
+            </div>
+
+            <button type="button" [ngClass]=" client.accountStatus === 'VERIFIED'? 'btn btn-danger': 'btn btn-primary' "
+            (click)="verifUserOrNot(client.email)"> {{client.accountStatus}}</button>        </div>
+        </a>
+
+            
+
+
+      </div>
+
+    
+      <!-- new -->
+      <!-- new -->
+    
+    </div>
+  </div>

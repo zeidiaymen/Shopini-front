@@ -1,0 +1,110 @@
+
+<div class="container">
+  <div class="row">
+ 
+    <div class="toolbox-center">
+      <input type="search" class="form-control" name="q" id="q"  [(ngModel)]= "searchtext" (input)="searchproducts()"   placeholder="Search product ..." required>
+      <div class="toolbox-info">
+      </div><!-- End .toolbox-info -->
+    </div><!-- End .toolbox-center -->
+ 
+ 
+    <h3> Category</h3>
+    <div class="filter-items filter-items-count">
+      <div class="filter-item">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="cat-1" [checked]='catE' (click)="searchproductsCat('Electromenager')">
+          <label class="custom-control-label" for="cat-1">Electromenager</label>
+          <span class="item-count"> {{ E }}</span>
+        </div><!-- End .custom-checkbox -->
+      </div><!-- End .filter-item -->
+ 
+      <div class="filter-item">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="cat-2"  [checked]='catA' (click)="searchproductsCat('Alimentaire')">
+          <label class="custom-control-label" for="cat-2">Alimentaire</label>
+          <span class="item-count">  {{ A }}  </span>
+        </div><!-- End .custom-checkbox -->
+      </div><!-- End .filter-item -->
+ 
+      <div class="filter-item">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="cat-3"  [checked]='catQ' (click)="searchproductsCat('Quincaillerie')">
+          <label class="custom-control-label" for="cat-3">Quincaillerie</label>
+          <span class="item-count"> {{ Q }}</span>
+        </div><!-- End .custom-checkbox -->
+      </div><!-- End .filter-item -->
+ 
+    </div><!-- End .filter-items -->
+ 
+         <h3> Price</h3>
+    <div class="filter-price-text">
+      Price Range: ${{currentprice}}
+      <span id="filter-price-range" ></span>
+    </div><!-- End .filter-price-text -->
+          <div class="slidecontainer">
+            <input type="range"    [(ngModel)]= "pprice" (change)="searchproductsprice()"
+                   min="0"  max="1000"  class="slider" id="myRange">
+          </div>
+ 
+ 
+  </div>
+   <div class="col-xs-12 col-md-6 " >
+     <!-- First product box start here-->
+     <div class="prod-info-main prod-wrap clearfix " 
+     
+     *ngFor="let p of ListProduct; let i=index " >
+       <div class="row" >
+         <div class="col-md-5 col-sm-12 col-xs-12">
+           <div class="product-image">
+             <img *ngIf="imgm==null && imgi != i" src="{{p.imagesProduit[0].url}}" style="width: 283.66px;height: 283.66px;" alt="194x228" class="img-responsive">
+             <img *ngIf="imgm!=null && imgi != i" src="{{p.imagesProduit[0].url}}" style="width: 283.66px;height: 283.66px;" alt="194x228" class="img-responsive">
+             <img *ngIf="imgm!=null && imgi == i" src="{{imgm}}" style="width: 283.66px;height: 283.66px;" alt="194x228" class="img-responsive">
+ 
+             <span class="tag2 sale">
+               SALE
+             </span>
+           </div>
+ 
+         </div>
+         <div class="col-md-7 col-sm-12 col-xs-12">
+           <div class="product-deatil">
+             <h5 class="name">
+               <a href="#">
+                 {{p.libelle }} <span>{{p.detailProduit.categorieProduit }} </span>
+               </a>
+             </h5>
+             <p class="price-container">
+               <span> {{p.prixUnitaire }} TND</span>
+             </p>
+             <span class="tag1"></span>
+ 
+           </div>
+           <div class="description">
+             <p>{{p.code  }}</p>
+             <a   (click)="showthisimagem(img.url,i)"  *ngFor="let img of p.imagesProduit"  >
+               <img src="{{ img.url }}"alt="{{ img.name }}" width="50 " length="50" >
+             </a>
+           </div>
+           <div class="product-info smart-form">
+             <div class="row">
+               <div class="col-md-12">
+<button type="button" class="btn btn-primary" (click)="addToCart(p)"  >Add to cart</button>
+              </div>
+ 
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <!-- end product -->
+ 
+ 
+ 
+   </div>
+ </div>
+ 
+ <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+ 
+ 
+ 

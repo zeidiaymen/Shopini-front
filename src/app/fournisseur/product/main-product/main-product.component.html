@@ -1,0 +1,69 @@
+<div class="col-8">
+  <label class="btn btn-default p-0">
+    <input type="file" accept="text/csv" multiple (change)="selectFiles($event)" />
+  </label>
+</div>
+<button  [disabled]="!selectedFiles" (click)="uploadFiles()" class="btn btn-primary btn-round"> load map locations  CSV </button>
+
+<br><button (click)="exportPDF()" class="btn btn-primary btn-round"> export  map locations to PDF </button>
+<br><button (click)="exportCSV()" class="btn btn-primary btn-round"> export map locations to CSV </button>
+<br><a class="collapse-item" [routerLink]="['add']" class="btn btn-primary btn-round" >ADD Product</a>
+<div class="table-responsive" >
+  <table class="table" *ngFor="let p of ListProduct; let i=index">
+    <thead>
+    <tr>
+      <th >idProduit</th>
+      <th >code</th>
+      <th >libelle</th>
+      <th >mapLocalisation</th>
+      <th>imagesProduit</th>
+      <th >prixUnitaire</th>
+      <th scope="col">idDetailProduit</th>
+      <th scope="col">dateCreation</th>
+      <th scope="col">dateLimiteConsommation</th>
+      <th scope="col">dateDerniereModification</th>
+      <th scope="col">categorieProduit</th>
+      <th scope="col">quantite</th>
+      <th >fournisseur</th>
+      <th >Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">  {{p.idProduit }}</th>
+      <td>      {{p.code }}</td>
+      <td>{{p.libelle }}</td>
+      <td>
+        <button  (click)="showmap(p.mapLocalisation,i)" class="btn btn-primary btn-round"> show map location</button>
+        <script async
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc-A_UD1XAqk3B1CyJczYw6AyQ3xUJgj0&libraries=visualization">
+        </script>
+        <div *ngIf="apiLoaded | async">
+          <google-map *ngIf="verifmap==i" [center]="center"  [zoom]="zoom"  >
+            <map-marker [position]="markerPosition" [options]="markerOptions"></map-marker>
+          </google-map>
+        </div>
+      </td>
+      <td>
+        <button (click)="showimages(p.imagesProduit,i)" class="btn btn-primary btn-round"> show images</button>
+        <ng-image-slider *ngIf="verifslider==i" #nav [images]="imgCollection" ></ng-image-slider>
+      </td>
+      <td>  {{ p.prixUnitaire }}</td>
+      <td>{{p.detailProduit.idDetailProduit }}</td>
+      <td>{{p.detailProduit.dateCreation }}</td>
+      <td>{{p.detailProduit.dateLimiteConsommation }}</td>
+      <td> {{p.detailProduit.dateDerniereModification }}</td>
+      <td>{{p.detailProduit.categorieProduit }}</td>
+      <td [ngStyle]="{'background-color':p.detailProduit.quantite !=0?'green':'red'}">  {{p.detailProduit.quantite }}</td>
+      <td>{{p.fournisseur.firstName }}  {{p.fournisseur.lastName }}</td>
+      <td>
+        <button   class="btn btn-primary btn-round" [routerLink]="['update/',p.idProduit]" >modify </button>
+        <app-removeproduct [product]="p"  (notif)="afterDeleteProduct($event)"  > </app-removeproduct>
+      </td>
+
+
+    </tr>
+
+    </tbody>
+  </table>
+</div>
